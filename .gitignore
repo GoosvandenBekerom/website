@@ -1,2 +1,6 @@
+# Intellij IDEA files
 .idea/
 *.iml
+
+# generated code
+*_templ.go

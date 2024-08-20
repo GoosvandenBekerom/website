@@ -1,0 +1,12 @@
+package pages
+
+import (
+  "github.com/goosvandenbekerom/website/web/internal/templates/shared"
+)
+
+templ Home() {
+	@shared.Page("Home") {
+		<h1>Hello, Landing Page!</h1>
+		<p>Does live reloading templ files work?</p>
+	}
+}

@@ -49,15 +49,25 @@ test.cover:
 # DEVELOPMENT
 # ==================================================================================== #
 
+## tools: install required tools for this project
+.PHONY: tools
+tools:
+	go install github.com/a-h/templ/cmd/templ@latest
+
 ## tidy: tidy modfiles and format .go files
 .PHONY: tidy
 tidy:
 	go mod tidy -v
 	go fmt ./...
 
+## gen: generate code
+.PHONY: gen
+gen:
+	go generate ./...
+
 ## build: build the application
 .PHONY: build
-build:
+build: gen
 	go build -o=/tmp/bin/${binary_name} ${main_package_path}
 
 ## run: run the application @ localhost
@@ -71,7 +81,7 @@ run.live:
 	go run github.com/air-verse/air@v1.52.3 \
 		--build.cmd "make build" --build.bin "/tmp/bin/${binary_name}" --build.delay "100" \
 		--build.exclude_dir "" \
-		--build.include_ext "go, tpl, tmpl, html, css, scss, js, ts, sql, jpeg, jpg, gif, png, bmp, svg, webp, ico" \
+		--build.include_ext "go, templ, tpl, tmpl, html, css, scss, js, ts, sql, jpeg, jpg, gif, png, bmp, svg, webp, ico" \
 		--misc.clean_on_exit "true" \
 		-- --addr localhost:8080
 

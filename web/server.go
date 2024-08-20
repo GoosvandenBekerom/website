@@ -3,6 +3,9 @@ package web
 import (
 	"net/http"
 	"time"
+
+	"github.com/goosvandenbekerom/website/web/internal/assets"
+	"github.com/goosvandenbekerom/website/web/internal/handlers"
 )
 
 const (
@@ -12,9 +15,9 @@ const (
 func NewServer() http.Handler {
 	mux := http.NewServeMux()
 
-	mux.HandleFunc("GET /", func(w http.ResponseWriter, r *http.Request) {
-		w.Write([]byte("Hello, Landing Page!"))
-	})
+	assets.Mount(mux)
+
+	mux.Handle("GET /", handlers.Home())
 
 	return http.TimeoutHandler(mux, serverTimeout, "request timed out")
 }
