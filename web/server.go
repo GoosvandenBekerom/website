@@ -1,6 +1,13 @@
 package web
 
-import "net/http"
+import (
+	"net/http"
+	"time"
+)
+
+const (
+	serverTimeout = 10 * time.Second
+)
 
 func NewServer() http.Handler {
 	mux := http.NewServeMux()
@@ -9,5 +16,5 @@ func NewServer() http.Handler {
 		w.Write([]byte("Hello, Landing Page!"))
 	})
 
-	return mux
+	return http.TimeoutHandler(mux, serverTimeout, "request timed out")
 }
