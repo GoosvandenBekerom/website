@@ -21,14 +21,18 @@ func main() {
 
 	storage, err := data.NewStorage()
 	if err != nil {
-		slog.Error("failed to init storage", slog.String("error", err.Error()))
-		os.Exit(1)
+		fail("init storage", err)
 	}
 
 	server := web.NewServer(storage)
 
 	slog.Info("starting http server", slog.String("addr", *addr))
 	if err := http.ListenAndServe(*addr, server); err != nil {
-		slog.Error("failed to start http server", slog.String("error", err.Error()))
+		fail("start http server", err)
 	}
+}
+
+func fail(action string, err error) {
+	slog.Error("failed to "+action, slog.String("error", err.Error()))
+	os.Exit(1)
 }
