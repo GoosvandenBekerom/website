@@ -4,6 +4,7 @@ import (
 	"flag"
 	"log/slog"
 	"net/http"
+	"os"
 
 	"github.com/goosvandenbekerom/website/data"
 	"github.com/goosvandenbekerom/website/pkg/logger"
@@ -18,7 +19,12 @@ func main() {
 	flag.Parse()
 	logger.Initialize()
 
-	storage := data.NewStorage()
+	storage, err := data.NewStorage()
+	if err != nil {
+		slog.Error("failed to init storage", slog.String("error", err.Error()))
+		os.Exit(1)
+	}
+
 	server := web.NewServer(storage)
 
 	slog.Info("starting http server", slog.String("addr", *addr))

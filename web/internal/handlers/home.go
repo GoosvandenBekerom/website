@@ -18,7 +18,7 @@ func Home(storage *data.Storage) home {
 }
 
 func (h home) ServeHTTP(w http.ResponseWriter, r *http.Request) {
-	profile, err := h.storage.GetProfile()
+	profile, err := h.storage.GetProfile(r.Context())
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return

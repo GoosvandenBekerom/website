@@ -1,6 +1,8 @@
 main_package_path = .
 binary_name = website
 
+export DB_FILENAME = /tmp/website.db
+
 # ==================================================================================== #
 # HELPERS
 # ==================================================================================== #
@@ -53,12 +55,19 @@ test.cover:
 .PHONY: tools
 tools:
 	go install github.com/a-h/templ/cmd/templ@latest
+	brew install sqlite3
+	brew install sqlite-utils
 
 ## tidy: tidy modfiles and format .go files
 .PHONY: tidy
 tidy:
 	go mod tidy -v
 	go fmt ./...
+
+## db.init: initialize sqlite db file if it doesn't exist yet.
+.PHONY: db.init
+db.init:
+	@([ ! -f $(DB_FILENAME) ] && sqlite3 $(DB_FILENAME) "VACUUM;") || echo "database already exists"
 
 ## gen: generate code
 .PHONY: gen
@@ -68,16 +77,16 @@ gen:
 ## build: build the application
 .PHONY: build
 build: gen
-	go build -o=/tmp/bin/${binary_name} ${main_package_path}
+	CGO_ENABLED=1 go build -o=/tmp/bin/${binary_name} ${main_package_path}
 
 ## run: run the application @ localhost
 .PHONY: run
-run: build
+run: build db.init
 	/tmp/bin/${binary_name} --addr localhost:8080
 
 ## run.live: run the application @ localhost with reloading on file changes
 .PHONY: run.live
-run.live:
+run.live: db.init
 	go run github.com/air-verse/air@v1.52.3 \
 		--build.cmd "make build" --build.bin "/tmp/bin/${binary_name}" --build.delay "100" \
 		--build.exclude_dir "" \
