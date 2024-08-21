@@ -5,7 +5,8 @@ import (
 	"log/slog"
 	"net/http"
 
-	"github.com/goosvandenbekerom/website/logger"
+	"github.com/goosvandenbekerom/website/data"
+	"github.com/goosvandenbekerom/website/pkg/logger"
 	"github.com/goosvandenbekerom/website/web"
 )
 
@@ -17,7 +18,8 @@ func main() {
 	flag.Parse()
 	logger.Initialize()
 
-	server := web.NewServer()
+	storage := data.NewStorage()
+	server := web.NewServer(storage)
 
 	slog.Info("starting http server", slog.String("addr", *addr))
 	if err := http.ListenAndServe(*addr, server); err != nil {

@@ -1,0 +1,11 @@
+package components
+
+import (
+  "github.com/goosvandenbekerom/website/data/models"
+)
+
+templ Profile(profile models.Profile) {
+  <h3>{ profile.Name }</h3>
+  <div>{ profile.Email }</div>
+  <div>{ profile.DateOfBirth.Format("02-01-2006") }</div>
+}

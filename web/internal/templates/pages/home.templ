@@ -1,12 +1,13 @@
 package pages
 
 import (
+	"github.com/goosvandenbekerom/website/data/models"
+  "github.com/goosvandenbekerom/website/web/internal/templates/components"
   "github.com/goosvandenbekerom/website/web/internal/templates/shared"
 )
 
-templ Home() {
+templ Home(profile models.Profile) {
 	@shared.Page("Home") {
-		<h1>Hello, Landing Page!</h1>
-		<p>Does live reloading templ files work?</p>
+		@components.Profile(profile)
 	}
 }

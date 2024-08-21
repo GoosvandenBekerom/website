@@ -7,7 +7,7 @@ import (
 	"os"
 	"strings"
 
-	"github.com/goosvandenbekerom/website/logger/colors"
+	"github.com/goosvandenbekerom/website/pkg/logger/colors"
 )
 
 const timeFormat = "[2006-01-02 15:04:05.000]"
