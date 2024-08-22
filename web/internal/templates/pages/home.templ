@@ -8,6 +8,9 @@ import (
 
 templ Home(profile models.Profile) {
 	@shared.Page("Home") {
+		@components.Navigation(profile)
 		@components.Profile(profile)
+    @components.Portfolio()
+    @components.Footer()
 	}
 }
