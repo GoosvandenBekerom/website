@@ -90,6 +90,7 @@ run.live: db.init
 	go run github.com/air-verse/air@v1.52.3 \
 		--build.cmd "make build" --build.bin "/tmp/bin/${binary_name}" --build.delay "100" \
 		--build.exclude_dir "" \
+		--build.exclude_regex ".*_templ.go" \
 		--build.include_ext "go, templ, tpl, tmpl, html, css, scss, js, ts, sql, jpeg, jpg, gif, png, bmp, svg, webp, ico" \
 		--misc.clean_on_exit "true" \
 		-- --addr localhost:8080
