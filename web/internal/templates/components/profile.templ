@@ -5,20 +5,8 @@ import (
 )
 
 templ Profile(profile models.Profile) {
-  <header class="masthead bg-primary text-white text-center">
-    <div class="container d-flex align-items-center flex-column">
-      <!-- Masthead Avatar Image-->
-      <img class="masthead-avatar mb-5" src="/dist/img/avataaars.svg" alt="avatar" />
-      <!-- Masthead Heading-->
-      <h1 class="masthead-heading text-uppercase mb-0">{ profile.Name }</h1>
-      <!-- Icon Divider-->
-      <div class="divider-custom divider-light">
-        <div class="divider-custom-line"></div>
-        <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
-        <div class="divider-custom-line"></div>
-      </div>
-      <!-- Masthead Subheading-->
-      <p class="masthead-subheading font-weight-light mb-0">(TODO: Job Title) - { profile.Email } - { profile.DateOfBirth.Format("02-01-2006") }</p>
+    <div class="content">
+      <h1 class="page-title">{ profile.Name }</h1>
+      <p>(TODO: Job Title) - { profile.Email } - { profile.DateOfBirth.Format("02-01-2006") }</p>
     </div>
-  </header>
 }

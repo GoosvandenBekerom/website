@@ -19,6 +19,7 @@ func NewServer(storage *data.Storage) http.Handler {
 	assets.Mount(mux)
 
 	mux.Handle("GET /", handlers.Home(storage))
+	mux.Handle("GET /experience", handlers.Experience(storage))
 
 	return http.TimeoutHandler(mux, serverTimeout, "request timed out")
 }
